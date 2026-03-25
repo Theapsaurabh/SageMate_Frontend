@@ -65,11 +65,14 @@ export default function DoctorHeader() {
   };
 
   const getUserName = () => {
-    if (!user) return "Doctor";
-    if (user.name) return `Dr. ${user.name.split(' ')[0]}`;
-    if (user.email) return user.email.split('@')[0];
-    return "Doctor";
-  };
+  if (!user) return "Doctor";
+
+  if (user && typeof user === "object" && "name" in user) {
+    return `Dr. ${(user as any).name?.split(" ")[0]}`;
+  }
+
+  return "Doctor";
+};
 
   if (loading) {
     return (
