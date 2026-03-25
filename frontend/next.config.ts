@@ -1,15 +1,14 @@
-import type { NextConfig } from "next";
 import fs from "fs";
-import path from "path";
 
-const nextConfig: NextConfig = {
-  devServer: {
+const isDev = process.env.NODE_ENV === "development";
+
+const nextConfig = {
+  ...(isDev && {
     https: {
-      key: fs.readFileSync(path.join(process.cwd(), "localhost-key.pem")),
-      cert: fs.readFileSync(path.join(process.cwd(), "localhost.pem")),
+      key: fs.readFileSync("localhost-key.pem"),
+      cert: fs.readFileSync("localhost.pem"),
     },
-  },
-  reactStrictMode: true,
+  }),
 };
 
 export default nextConfig;
